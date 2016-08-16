@@ -118,25 +118,14 @@
           <additionalparam>-Xdoclint:none</additionalparam>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.eluder.coveralls</groupId>
+        <artifactId>coveralls-maven-plugin</artifactId>
+        <version>4.2.0</version>
+      </plugin>
     </plugins>
   </build>
-
-  <!--pluginRepositories>
-    <pluginRepository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>nexus-central</id>
-      <name>plugins-release</name>
-      <url>https://oss.sonatype.org/content/groups/public</url>
-    </pluginRepository>
-    <pluginRepository>
-      <snapshots />
-      <id>nexus-snapshots</id>
-      <name>plugins-snapshot</name>
-      <url>https://oss.sonatype.org/content/groups/staging</url>
-    </pluginRepository>
-  </pluginRepositories-->
 
   <distributionManagement>
     <repository>
