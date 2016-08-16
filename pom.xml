@@ -7,6 +7,30 @@
   <version>1.0.0-RELEASE</version>
 
   <name>Many Auths</name>
+  <description>A utility for various authentication strategies.</description>
+  <url>http://douglasrlee.com/many-auth</url>
+
+  <licenses>
+    <license>
+      <name>LGPL license, Version 3.0</name>
+      <url>https://www.gnu.org/licenses/lgpl.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Douglas R. Lee</name>
+      <email>douglas.r.lee@outlook.com</email>
+      <organization>Douglas R. Lee</organization>
+      <organizationUrl>http://douglasrlee.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:douglasrlee/many-auth.git</connection>
+    <developerConnection>scm:git:git@github.com:douglasrlee/many-auth.git</developerConnection>
+    <url>git@github.com:douglasrlee/many-auth.git</url>
+  </scm>
 
   <dependencies>
     <dependency>
@@ -26,5 +50,102 @@
       <artifactId>javalite-common</artifactId>
       <version>1.4.11</version>
     </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>1.10.19</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock</artifactId>
+      <version>1.57</version>
+      <classifier>standalone</classifier>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>nexus-central</id>
+      <name>plugins-release</name>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+    </pluginRepository>
+    <pluginRepository>
+      <snapshots />
+      <id>nexus-snapshots</id>
+      <name>plugins-snapshot</name>
+      <url>https://oss.sonatype.org/content/groups/staging</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <distributionManagement>
+    <repository>
+      <id>nexus-releases</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
