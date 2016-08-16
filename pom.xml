@@ -4,7 +4,7 @@
 
   <groupId>com.douglasrlee</groupId>
   <artifactId>many-auths</artifactId>
-  <version>1.0.0-RELEASE</version>
+  <version>1.0.0</version>
 
   <name>Many Auths</name>
   <description>A utility for various authentication strategies.</description>
@@ -121,7 +121,7 @@
     </plugins>
   </build>
 
-  <pluginRepositories>
+  <!--pluginRepositories>
     <pluginRepository>
       <snapshots>
         <enabled>false</enabled>
@@ -136,15 +136,15 @@
       <name>plugins-snapshot</name>
       <url>https://oss.sonatype.org/content/groups/staging</url>
     </pluginRepository>
-  </pluginRepositories>
+  </pluginRepositories-->
 
   <distributionManagement>
     <repository>
-      <id>nexus-releases</id>
+      <id>nexus</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>nexus-snapshots</id>
+      <id>nexus</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
