@@ -2,8 +2,8 @@ package com.douglasrlee.many_auths.auths;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
@@ -23,13 +23,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.douglasrlee.many_auths.ManyAuths;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
-@RunWith(JUnit4.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(OAuth2Auth.class)
+@PowerMockIgnore("javax.net.ssl.*")
 public class OAuth2AuthTest {
   private ManyAuths manyAuths                   = null;
   private ManyAuths manyAuthsWithProfile        = null;
@@ -87,6 +93,14 @@ public class OAuth2AuthTest {
     );
   }
 
+  @Test(expected = RuntimeException.class)
+  public void authenticateException() throws Exception {
+    PowerMockito.mockStatic(URLEncoder.class);
+    PowerMockito.when(URLEncoder.encode(Mockito.anyString(), Mockito.anyString())).thenThrow(new UnsupportedEncodingException());
+
+    manyAuths.authenticate();
+  }
+
   @Test
   public void authenticateWithRequest() {
     when(httpServletRequest.getParameter("code")).thenReturn("my-code");
@@ -116,6 +130,16 @@ public class OAuth2AuthTest {
     the(response.get("refresh_token")).shouldBeEqual("my-refresh_token");
     the(response).shouldContain("token_type");
     the(response.get("token_type")).shouldBeEqual("Bearer");
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void authenticateWithRequestException() throws Exception {
+    when(httpServletRequest.getParameter("code")).thenReturn("my-code");
+
+    PowerMockito.mockStatic(URLEncoder.class);
+    PowerMockito.when(URLEncoder.encode(Mockito.anyString(), Mockito.anyString())).thenThrow(new UnsupportedEncodingException());
+
+    manyAuths.authenticate(httpServletRequest);
   }
 
   @Test
@@ -168,5 +192,15 @@ public class OAuth2AuthTest {
     the(response.get("first_name")).shouldBeEqual("John");
     the(response).shouldContain("last_name");
     the(response.get("last_name")).shouldBeEqual("Doe");
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void authenticateWithRequestAndBooleanException() throws Exception {
+    when(httpServletRequest.getParameter("code")).thenReturn("my-code");
+
+    PowerMockito.mockStatic(URLEncoder.class);
+    PowerMockito.when(URLEncoder.encode(Mockito.anyString(), Mockito.anyString())).thenThrow(new UnsupportedEncodingException());
+
+    manyAuths.authenticate(httpServletRequest, true);
   }
 }
