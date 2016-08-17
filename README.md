@@ -8,6 +8,7 @@ Many Auths is designed to make authentication requests in java easier.
 Many Auths will take your client information and your authorization server information and build the redirect request to the authorization endpoint. Then in your callback controller it will take the code and then retrieve the token.
 
 ## OAuth2Auth Usage
+OAuth2Auth follows the [Authorization Code Grant](https://tools.ietf.org/html/rfc6749#section-4.1).
 ##### Initialization
 Standard Initialization
 ```java
